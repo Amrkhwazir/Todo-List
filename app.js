@@ -1,9 +1,12 @@
-let inputBar = document.querySelector('.inputBar')
+let inputBar = document.querySelector('.inputBar');
 // console.log(inputBar)
-let btn = document.querySelector('.btn')
+let btn = document.querySelector('.btn');
 // console.log(btn)
-let ul = document.querySelector('ul')
+let ul = document.querySelector('ul');
 // console.log(ul)
+let listDiv = document.querySelector('.list');
+console.log(listDiv)
+
 
 btn.addEventListener('click', () => {
 
@@ -66,8 +69,24 @@ editBtn.addEventListener('click', () => {
 
     inputBar.value = p.innerText;
    let removePara = p.remove(p.innerText);
-    p.replaceChild(inputBar.value,removePara )
+   ul.removeChild(li);
+})
+
+
+
+
 
 })
 
-})
+// let deltItemBox = document.createElement('div');
+// deltItemBox.className = "allItemDelt";
+// listDiv.appendChild(deltItemBox);
+// deltItemBox.innerHTML = `<button class ="deltItemBtn">All Item Delete</button>`
+
+// // All Item Delete //
+
+// // console.log(deltItemBox)
+
+// function EveryThingRemove(){
+//     ul.remove("p");
+// }
