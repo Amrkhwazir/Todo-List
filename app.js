@@ -5,7 +5,7 @@ let btn = document.querySelector('.btn');
 let ul = document.querySelector('ul');
 // console.log(ul)
 let listDiv = document.querySelector('.list');
-console.log(listDiv)
+// console.log(listDiv)
 
 
 btn.addEventListener('click', () => {
@@ -76,17 +76,24 @@ editBtn.addEventListener('click', () => {
 
 
 
-})
+deltItemBtn.addEventListener('click', EveryThingRemove )
+function EveryThingRemove(){
+    ul.removeChild(li);
 
-// let deltItemBox = document.createElement('div');
-// deltItemBox.className = "allItemDelt";
-// listDiv.appendChild(deltItemBox);
-// deltItemBox.innerHTML = `<button class ="deltItemBtn">All Item Delete</button>`
+}})
 
-// // All Item Delete //
+// All Item Delete //
 
-// // console.log(deltItemBox)
+let deltItemBox = document.createElement('div');
+deltItemBox.className = "allItemDelt";
+listDiv.appendChild(deltItemBox);
 
-// function EveryThingRemove(){
-//     ul.remove("p");
-// }
+let deltItemBtn = document.createElement('button');
+deltItemBtn.className = "deltItemBtn";
+deltItemBox.appendChild(deltItemBtn);
+let deltItemBtnText = document.createTextNode('Delete All Item');
+deltItemBtn.appendChild(deltItemBtnText);
+// console.log(deltItemBox)
+
+
+
