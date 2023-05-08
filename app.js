@@ -30,8 +30,8 @@ btn.addEventListener('click', () => {
     
         inputBar.value = ""
         
-       
-
+       // delete all button shows
+  deltItemBox.style.visibility = "visible"
 
         // Delete button create //
 
@@ -68,10 +68,11 @@ deleteBtn.addEventListener('click', () => {
 editBtn.addEventListener('click', () => {
 
     inputBar.value = p.innerText;
-   let removePara = p.remove(p.innerText);
-   ul.removeChild(li);
-})
+    p.style.textDecoration = "line-through";
+    btn.innerHTML = 'Edit';
 
+    console.log(ul);
+})
 
 
 
@@ -85,6 +86,7 @@ function EveryThingRemove(){
 // All Item Delete //
 
 let deltItemBox = document.createElement('div');
+deltItemBox.style.visibility = "hidden"
 deltItemBox.className = "allItemDelt";
 listDiv.appendChild(deltItemBox);
 
