@@ -69,9 +69,16 @@ editBtn.addEventListener('click', () => {
 
     inputBar.value = p.innerText;
     p.style.textDecoration = "line-through";
-    btn.innerHTML = 'Edit';
-
-    console.log(ul);
+    btn.style.visibility = "hidden";
+    let editButton = document.querySelector('.editbutton');
+    editButton.style.visibility = "visible";
+    editButton.addEventListener('click', ()=>{
+        p.innerHTML = inputBar.value
+        p.style.textDecoration = "none";
+        inputBar.value = '';
+    })
+   
+    
 })
 
 
