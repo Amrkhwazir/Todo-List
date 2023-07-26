@@ -44,7 +44,7 @@
     transform: scale(0.9);
 }
 
-.editbutton{
+.updatebutton{
     position: absolute;
     cursor: pointer;
     right: 472px;
@@ -57,7 +57,10 @@
     background-color: rgb(160, 80, 240);
     color: white;
     transition: 0.8s all ease;
-    visibility: hidden;
+    z-index: -1;
+}
+.show{
+    z-index: 1;
 }
 .editbutton:active{
     transform: scale(0.9);
