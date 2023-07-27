@@ -1,138 +1,148 @@
-import {app, addDoc, collection, db, getDocs, doc, deleteDoc } from "./firebaseConfig.js    " 
+import {app, addDoc, collection, db, getDocs, doc, deleteDoc, updateDoc } from "./firebaseConfig.js    " 
 
 
 
 let inputBar = document.querySelector('.inputBar');
 let btn = document.querySelector('.btn');
 let ul = document.querySelector('ul');
-let listDiv = document.querySelector('.list');
-let updatebutton = document.querySelector('.updatebutton');
-let editBtn = document.querySelector('.editBtn');
 
-// let dataId;
 
-// getTodoListDataHandler()
+let dataId;
+let globalDataId;
 
-btn.addEventListener('click', async () => {
+getTodoListDataHandler()
+
+
+btn.addEventListener('click', postTodoData)
+
+async  function postTodoData(){
+  console.log("btn working")
 
     if(inputBar.value.trim() === ""){
     
-        inputBar.value = ""
-        return
-    }
-
-
-    // console.log(inputBar.value + "==> input value")
-    // console.log(ul)
-    
-    
+      inputBar.value = ""
+      return
+  }
 
 try {
-    const docRef = await addDoc(collection(db, "data"), {
-      inputData: inputBar.value,
-  
-    });
-            inputBar.value = ""
-            
-            console.log("Document written with ID: ", docRef.id);
-            getTodoListDataHandler()
-  } catch (e) {
-    console.error("Error adding document: ", e);
+  const docRef = await addDoc(collection(db, "data"), {
+    inputData: inputBar.value,
+
+  });
+          inputBar.value = ""
+          
+          getTodoListDataHandler()
+          console.log("Document written with ID: ", docRef.id);
+} catch (e) {
+  console.error("Error adding document: ", e);
+}
   }
-})
+    
+
 
   async function getTodoListDataHandler(){
-    
+    ul.innerHTML = "";
     const querySnapshot = await getDocs(collection(db, "data"));
 
     querySnapshot.forEach((doc) => {
-  // doc.data() is never undefined for query doc snapshots
-  // console.log(doc.id, " => ", doc.data());
-    const {inputData} = doc.data()
-   const dataId = doc.id
-    // console.log(dataId)
-
-  const li = document.createElement('li');
-  // console.log(li)
   
-  li.innerHTML = `  <p>${inputData}</p>
-  <button class="editBtn"> edit </button>
-  <button class="deleteBtn" onclick="deleteItemHandler('${dataId}')"> delete </button>`
-
-  ul.appendChild(li);
-
+      const {inputData} = doc.data()
+    dataId = doc.id
+    console.log(dataId)
+  
+    
+    const li = document.createElement('li');
+    console.log(li)
+    
+    li.innerHTML = `<p>${inputData}</p>
+    <button class="editBtn" onclick="editHandler('${inputData}','${dataId}')"> edit </button>
+    <button class="deleteBtn" onclick="deleteItemHandler('${dataId}')"> delete </button>`
+    
+    ul.appendChild(li);
+    
 });
 
  }
   
-
- 
   // Delete section //
   
 
   async function  deleteItemHandler(dataId){
     console.log("working")
     console.log(dataId)
-  
-    await deleteDoc(doc(db, "data", dataId));
-    console.log("post delete")
-    getTodoListDataHandler()
-    window.location.reload()
-  
+  // 
+   try {
+     await deleteDoc(doc(db, "data", dataId));
+     console.log("post delete") 
+     getTodoListDataHandler()
+    } catch (error) {
+     console.log(error, ">> deleteHandler not working")
+   }
   }
   
-window.deleteItemHandler = deleteItemHandler
-//        // delete all button shows
+  
+  //        // delete all button shows
 // //   deltItemBox.style.visibility = "visible"
-
-
-    
-
-
-
-//     // edit button create //
-
-
-//     let editBtn = document.createElement('button');
-// editBtn.className = "editBtn";
-
-// li.appendChild(editBtn);
-
-// let editText = document.createTextNode('Edit');
-// editBtn.appendChild(editText);
-
 
 
 // // Edit Section //
 
-// editBtn.addEventListener('click', () => {
+async function updateHandler(){
 
-//     inputBar.value = p.innerText;
-//     p.style.textDecoration = "line-through";
-//     // inputBar.value = '';
-//     editButton.classList.add('show')
+  console.log("updateHandler working");
+  try {
+    
+    const washingtonRef = doc(db, "data", globalDataId);
+    console.log(globalDataId);
+    
+    console.log(dataId, ">>> data id globally")
+    
+    await updateDoc(washingtonRef, {
+      inputData: inputBar.value
+    });
+    
+    window.location.reload()
+    inputBar.value = '';
+  } catch (error) {
+    
+    console.log(error, ">>> updateHandler not working")  
+   
+}}
     
 
 
-// deltItemBtn.addEventListener('click', EveryThingRemove )
-// function EveryThingRemove(){
-//     ul.removeChild(li);
+function editHandler(inputData, dataId){
+  
+  inputBar.value = inputData ;
+  globalDataId = dataId
+  console.log(dataId, inputData,"editHandler working")   
+  
+  btn.innerHTML = "update"
+  
+  btn.removeEventListener("click", postTodoData);
+  btn.addEventListener("click", updateHandler)
+  
+  
+  }
 
-// }
-// })
+
+  
+  
+  window.deleteItemHandler = deleteItemHandler
+  window.editHandler = editHandler
 
 // All Item Delete //
 
-let deltItemBox = document.createElement('div');
-deltItemBox.style.visibility = "hidden"
-deltItemBox.className = "allItemDelt";
-listDiv.appendChild(deltItemBox);
+// let deltItemBox = document.createElement('div');
+// deltItemBox.style.visibility = "hidden"
+// deltItemBox.className = "allItemDelt";
+// listDiv.appendChild(deltItemBox);
 
-let deltItemBtn = document.createElement('button');
-deltItemBtn.className = "deltItemBtn";
-deltItemBox.appendChild(deltItemBtn);
-let deltItemBtnText = document.createTextNode('Delete All Item');
-deltItemBtn.appendChild(deltItemBtnText);
+// let deltItemBtn = document.createElement('button');
+// deltItemBtn.className = "deltItemBtn";
+// deltItemBox.appendChild(deltItemBtn);
+// let deltItemBtnText = document.createTextNode('Delete All Item');
+// deltItemBtn.appendChild(deltItemBtnText);
 // console.log(deltItemBox)
 
 

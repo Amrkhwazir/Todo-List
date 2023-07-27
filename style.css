@@ -4,6 +4,9 @@
     box-sizing: border-box;
     font-family: monospace;
 }
+body{
+    position: relative;
+}
 .container{
     position: relative;
     /* border: 2px solid black; */
@@ -147,3 +150,17 @@
  .deltItemBtn:active{
     transform: scale(0.8);
  }
+
+ 
+/* loader */
+
+#loader4Box{
+    display: flex;
+    justify-content: center;
+    top: 150px;
+    left: 460px;
+    position: absolute;
+    /* border: 1px solid black; */
+    width: 300px;
+    height: 200px;
+}
